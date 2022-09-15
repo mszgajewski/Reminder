@@ -12,7 +12,7 @@
 
         <include
             android:id="@+id/include"
-            layout="@layout/"/>
+            layout="@layout/custom_toolbar"/>
 
         <RelativeLayout
             android:id="@+id/relativeLayout"
@@ -35,7 +35,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:padding="10dp"
-            android:src="@drawable/"
+            android:src="@drawable/foodpanadalogo"
             app:layout_constraintBottom_toBottomOf="@id/relativeLayout"
             app:layout_constraintEnd_toEndOf="parent"/>
 
