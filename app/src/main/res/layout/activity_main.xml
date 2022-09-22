@@ -9,14 +9,15 @@
     tools:context=".MainActivity">
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:src="@color/design_default_color_primary_dark"
         android:layout_gravity="center"
         android:layout_marginTop="100dp"/>
 
-
     <TextView
+        android:id="text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Waste Calendar"
