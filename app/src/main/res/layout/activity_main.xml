@@ -17,7 +17,7 @@
         android:layout_marginTop="100dp"/>
 
     <TextView
-        android:id="text"
+        android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Waste Calendar"

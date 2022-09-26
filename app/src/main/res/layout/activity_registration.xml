@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background_design"
+    tools:context=".RegistrationActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/registrationToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ddf"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/Theme.AppCompat.Light" />
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="70dp"
+        android:layout_gravity="center" />
+
+    <EditText
+        android:id="@+id/registrationEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:layout_margin="10dp"
+        android:textColor="#ddf"
+        android:textColorHint="#ddf"
+        android:inputType="textEmailAddress"
+        android:background="@drawable/inputs"
+        android:drawableStart="@drawable/ic_email"
+        android:drawablePadding="10dp"
+        android:padding="10dp" />
+
+    <EditText
+        android:id="@+id/registrationPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/inputs"
+        android:hint="Hasło"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:textColor="#ddf"
+        android:drawableStart="@drawable/ic_lock"
+        android:drawablePadding="10dp"
+        android:textColorHint="#ddf" />
+
+    <Button
+        android:id="@+id/registrationButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Zrejestruj"
+        android:textAllCaps="false"
+        android:layout_margin="10dp"
+        android:textColor="#000"
+        android:background="#ddf" />
+
+    <TextView
+        android:id="@+id/registrationPageQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Masz już konto? Zaloguj się"
+        android:textColor="#ddf"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="10dp" />
+
+
+</LinearLayout>
