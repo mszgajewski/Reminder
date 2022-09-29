@@ -34,13 +34,16 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
-
         toolbar = findViewById(R.id.loginToolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Login");
-
         mAuth = FirebaseAuth.getInstance();
         loader = new ProgressDialog(this);
+
+        if (mAuth != null){
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            startActivity(intent);
+        }
 
         loginEmail =findViewById(R.id.loginEmail);
         loginPassword =findViewById(R.id.loginPassword);

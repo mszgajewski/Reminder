@@ -7,16 +7,23 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -39,7 +46,8 @@ public class HomeActivity extends AppCompatActivity {
     private ProgressDialog loader;
     private String onlineUserID;
     private String key = "";
-    private String task, description;
+    private String task;
+    private String description;
 
 
 
@@ -107,16 +115,17 @@ public class HomeActivity extends AppCompatActivity {
                     description.setError("Description Required");
                     return;
                 } else {
-                    loader.setMessage("Dowanie danych");
-                    loader.setCanceledOnTouchOutside(false);
+                    loader.setMessage("Dodawanie danych");
+                    loader.setCanceledOnTouchOutside(true);
                     loader.show();
 
                     Model model = new Model(mTask, mDescription, id, date);
+
                     reference.child(id).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()){
-                                Toast.makeText(HomeActivity.this, "Zadanie zaladowanie prawidłowo",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(HomeActivity.this, "Zadanie zaladowane prawidłowo",Toast.LENGTH_SHORT).show();
                                 loader.dismiss();
                             } else {
                                 String error = task.getException().toString();
@@ -130,5 +139,151 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         dialog.show();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseRecyclerOptions<Model> options = new FirebaseRecyclerOptions.Builder<Model>()
+                .setQuery(reference, Model.class).build();
+
+        FirebaseRecyclerAdapter<Model, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Model, MyViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position, @NonNull Model model) {
+                holder.setDate(model.getDate());
+                holder.setTask(model.getTask());
+                holder.setDesc(model.getDescription());
+
+                holder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        key = getRef(position).getKey();
+                        task = model.getTask();
+                        description = model.getDescription();
+
+                        updateTask();
+                    }
+                });
+            }
+
+            @NonNull
+            @Override
+            public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.retrieved_layout, parent, false);
+                return new MyViewHolder(view);
+            }
+        };
+
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
+
+    }
+
+    private void updateTask() {
+        AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.update_data,null);
+        myDialog.setView(view);
+
+        AlertDialog dialog = myDialog.create();
+
+        EditText mTask = view.findViewById(R.id.mEditTextTask);
+        EditText mDescription = view.findViewById(R.id.mEditTextDescription);
+
+        Button delButton = view.findViewById(R.id.btnDelete);
+        Button updateButton = view.findViewById(R.id.btnUpdate);
+
+        updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                task = mTask.getText().toString().trim();
+                description = mDescription.getText().toString().trim();
+
+                String date = DateFormat.getDateInstance().format(new Date());
+
+                Model model = new Model(task, description, key, date);
+
+                reference.child(key).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            Toast.makeText(HomeActivity.this, "Pomyślnie zaktualizowano", Toast.LENGTH_SHORT).show();
+                        } else {
+                            String error = task.getException().toString();
+                            Toast.makeText(HomeActivity.this, "Aktualizacja nieudana" + error, Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                });
+                dialog.dismiss();
+            }
+        });
+
+        delButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                reference.child(key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            Toast.makeText(HomeActivity.this, "Pomyślnie usunięto", Toast.LENGTH_SHORT).show();
+                        } else {
+                            String error = task.getException().toString();
+                            Toast.makeText(HomeActivity.this, "Usunięcie nieudane" + error, Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                });
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.logout:
+                mAuth.signOut();
+                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder{
+
+        View mView;
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            mView = itemView;
+        }
+
+        public void setTask(String task) {
+            TextView taskTextView = mView.findViewById(R.id.taskTv);
+            taskTextView.setText(task);
+        }
+
+        public void setDesc(String desc) {
+            TextView descTextView = mView.findViewById(R.id.descriptionTv);
+            descTextView.setText(desc);
+        }
+
+        public void setDate(String date) {
+            TextView dateTextView = mView.findViewById(R.id.dateTv);
+        }
     }
 }
