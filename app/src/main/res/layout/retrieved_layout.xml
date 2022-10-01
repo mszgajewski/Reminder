@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:textColor="#000"
-                android:text="Task"
+                android:text="Zadanie"
                 android:padding="5dp"
                 android:maxLines="1"
                 android:textSize="15sp"
