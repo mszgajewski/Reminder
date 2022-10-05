@@ -34,6 +34,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -70,7 +71,7 @@ public class HomeActivity extends AppCompatActivity {
         loader = new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
-        onlineUserID = mUser.getUid();
+        onlineUserID = Objects.requireNonNull(mUser).getUid();
         reference = FirebaseDatabase.getInstance().getReference().child("tasks").child(onlineUserID);
 
         floatingActionButton = findViewById(R.id.fab);
