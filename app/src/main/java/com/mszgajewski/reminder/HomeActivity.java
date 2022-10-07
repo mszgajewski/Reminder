@@ -49,8 +49,6 @@ public class HomeActivity extends AppCompatActivity {
     private String task;
     private String description;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,19 +64,19 @@ public class HomeActivity extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
-
-        loader = new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
-
         mUser = mAuth.getCurrentUser();
 
+        loader = new ProgressDialog(this);
+
         if(mUser!= null) {
-            onlineUserID = mUser.getUid(); //Do what you need to do with the id
+            onlineUserID = mUser.getUid();
         } else {
             Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+            finish();
         }
-       // onlineUserID = mUser.getUid();
 
         reference = FirebaseDatabase.getInstance().getReference().child("tasks").child(onlineUserID);
 
