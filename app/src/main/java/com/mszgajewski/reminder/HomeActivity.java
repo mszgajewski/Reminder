@@ -115,11 +115,11 @@ public class HomeActivity extends AppCompatActivity {
                 String date = DateFormat.getDateInstance().format(new Date());
 
                 if (TextUtils.isEmpty(mTask)){
-                    task.setError("Task Required");
+                    task.setError("Tytuł wymagany");
                     return;
                 }
                 if (TextUtils.isEmpty(mDescription)){
-                    description.setError("Description Required");
+                    description.setError("Opis wymagany");
                     return;
                 } else {
                     loader.setMessage("Dodawanie danych");
