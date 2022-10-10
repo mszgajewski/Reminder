@@ -68,15 +68,16 @@ public class HomeActivity extends AppCompatActivity {
         mUser = mAuth.getCurrentUser();
 
         loader = new ProgressDialog(this);
+        onlineUserID = mUser.getUid();
+        if(mUser!= null)
+        //{
 
-        if(mUser!= null) {
-            onlineUserID = mUser.getUid();
-        } else {
-            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
-        }
+       // } else {
+         //   Intent intent = new Intent(HomeActivity.this, RegistrationActivity.class);
+           // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+           // startActivity(intent);
+           // finish();
+       // }
 
         reference = FirebaseDatabase.getInstance().getReference().child("tasks").child(onlineUserID);
 
