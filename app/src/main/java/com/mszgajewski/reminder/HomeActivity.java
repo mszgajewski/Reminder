@@ -29,8 +29,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -39,16 +41,18 @@ public class HomeActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private RecyclerView recyclerView;
-    private FloatingActionButton floatingActionButton;
+    private Query query;
     private DatabaseReference reference;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
-    private ProgressDialog loader;
     private String onlineUserID;
+    /*
+    private ProgressDialog loader;
+    private FloatingActionButton floatingActionButton;
     private String key = "";
     private String task;
     private String description;
-
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,27 +68,30 @@ public class HomeActivity extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
+
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
-
-        loader = new ProgressDialog(this);
         onlineUserID = mUser.getUid();
+//      loader = new ProgressDialog(this);
+
+/*
         if(mUser!= null)
-        //{
+        {
 
-       // } else {
-         //   Intent intent = new Intent(HomeActivity.this, RegistrationActivity.class);
-           // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-           // startActivity(intent);
-           // finish();
-       // }
-
+        } else {
+            Intent intent = new Intent(HomeActivity.this, RegistrationActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+        }
+*/
         reference = FirebaseDatabase.getInstance().getReference().child("tasks").child(onlineUserID);
-
+/*
         floatingActionButton = findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(view -> addTask());
+ */
     }
-
+/*
     private void addTask() {
         AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -148,7 +155,7 @@ public class HomeActivity extends AppCompatActivity {
         });
         dialog.show();
     }
-
+*/
     @Override
     protected void onStart() {
         super.onStart();
@@ -162,7 +169,7 @@ public class HomeActivity extends AppCompatActivity {
                 holder.setDate(model.getDate());
                 holder.setTask(model.getTask());
                 holder.setDesc(model.getDescription());
-
+/*
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -170,16 +177,23 @@ public class HomeActivity extends AppCompatActivity {
                         task = model.getTask();
                         description = model.getDescription();
 
-                        updateTask();
+                       updateTask();
                     }
                 });
+*/
             }
 
             @NonNull
             @Override
             public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.retrieved_layout, parent, false);
+                View view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.retrieved_layout, parent, false);
                 return new MyViewHolder(view);
+            }
+
+            @Override
+            public void onError(@NonNull DatabaseError error) {
+                super.onError(error);
             }
         };
 
@@ -187,7 +201,7 @@ public class HomeActivity extends AppCompatActivity {
         adapter.startListening();
 
     }
-
+/*
     private void updateTask() {
         AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -270,7 +284,7 @@ public class HomeActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
+*/
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         View mView;
