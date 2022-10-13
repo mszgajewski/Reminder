@@ -265,7 +265,7 @@ public class HomeActivity extends AppCompatActivity {
         dialog.show();
 
     }
-
+*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu,menu);
@@ -284,7 +284,7 @@ public class HomeActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-*/
+
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         View mView;

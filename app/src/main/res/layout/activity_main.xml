@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#000046"
+    android:background="#1C2433"
     tools:context=".MainActivity">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:src="@color/design_default_color_primary_dark"
+        android:src="#296D98"
         android:layout_gravity="center"
         android:layout_marginTop="100dp"/>
 
