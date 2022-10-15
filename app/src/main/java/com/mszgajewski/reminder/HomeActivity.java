@@ -46,13 +46,13 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private String onlineUserID;
-    /*
+
     private ProgressDialog loader;
     private FloatingActionButton floatingActionButton;
     private String key = "";
     private String task;
     private String description;
-*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +61,7 @@ public class HomeActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.homeToolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Waste collection");
-
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
@@ -72,9 +72,9 @@ public class HomeActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         onlineUserID = mUser.getUid();
-//      loader = new ProgressDialog(this);
+        loader = new ProgressDialog(this);
 
-/*
+
         if(mUser!= null)
         {
 
@@ -84,14 +84,14 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-*/
+
         reference = FirebaseDatabase.getInstance().getReference().child("tasks").child(onlineUserID);
-/*
+
         floatingActionButton = findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(view -> addTask());
- */
+
     }
-/*
+
     private void addTask() {
         AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -155,7 +155,7 @@ public class HomeActivity extends AppCompatActivity {
         });
         dialog.show();
     }
-*/
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -169,7 +169,7 @@ public class HomeActivity extends AppCompatActivity {
                 holder.setDate(model.getDate());
                 holder.setTask(model.getTask());
                 holder.setDesc(model.getDescription());
-/*
+
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -180,14 +180,14 @@ public class HomeActivity extends AppCompatActivity {
                        updateTask();
                     }
                 });
-*/
+
             }
 
             @NonNull
             @Override
             public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.retrieved_layout, parent, false);
+                        .inflate(R.layout.rv_layout, parent, false);
                 return new MyViewHolder(view);
             }
 
@@ -201,7 +201,7 @@ public class HomeActivity extends AppCompatActivity {
         adapter.startListening();
 
     }
-/*
+
     private void updateTask() {
         AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -265,7 +265,7 @@ public class HomeActivity extends AppCompatActivity {
         dialog.show();
 
     }
-*/
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu,menu);
@@ -295,17 +295,17 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         public void setTask(String task) {
-            TextView taskTextView = mView.findViewById(R.id.taskTv);
+            TextView taskTextView = mView.findViewById(R.id.bottomTextView);
             taskTextView.setText(task);
         }
 
         public void setDesc(String desc) {
-            TextView descTextView = mView.findViewById(R.id.descriptionTv);
+            TextView descTextView = mView.findViewById(R.id.bottomDescTextView);
             descTextView.setText(desc);
         }
 
         public void setDate(String date) {
-            TextView dateTextView = mView.findViewById(R.id.dateTv);
+            TextView dateTextView = mView.findViewById(R.id.bottomSuitedForTextView);
         }
     }
 }

@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="#1C2433"
         android:layout_margin="10dp">
 
         <LinearLayout
@@ -27,7 +28,7 @@
                 android:textColor="#818197"
                 android:text="October 21, 2020"
                 android:gravity="center"
-                android:background="#1C2433"
+                android:background="#1C2446"
                 android:padding="10dp"
                 android:textSize="18sp"
                 android:textStyle="bold" />
