@@ -44,8 +44,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:textColor="#000"
-                android:text="Zadanie"
+                android:textColor="@color/white"
+                android:text="Typ"
                 android:padding="5dp"
                 android:maxLines="1"
                 android:textSize="15sp"
@@ -56,8 +56,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:textColor="#000"
-                android:text="Description"
+                android:textColor="@color/white"
+                android:text="Opis"
                 android:maxLines="3"
                 android:textSize="15sp" />
         </LinearLayout>

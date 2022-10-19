@@ -32,7 +32,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -41,12 +40,10 @@ public class HomeActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private RecyclerView recyclerView;
-    private Query query;
     private DatabaseReference reference;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private String onlineUserID;
-
     private ProgressDialog loader;
     private FloatingActionButton floatingActionButton;
     private String key = "";
@@ -60,7 +57,7 @@ public class HomeActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.homeToolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Waste collection");
+        getSupportActionBar().setTitle("Waste Reminder");
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -85,7 +82,7 @@ public class HomeActivity extends AppCompatActivity {
             finish();
         }
 
-        reference = FirebaseDatabase.getInstance().getReference().child("tasks").child(onlineUserID);
+        reference = FirebaseDatabase.getInstance().getReference().child("Area").child("Majków");
 
         floatingActionButton = findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(view -> addTask());
@@ -180,14 +177,13 @@ public class HomeActivity extends AppCompatActivity {
                        updateTask();
                     }
                 });
-
             }
 
             @NonNull
             @Override
             public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.rv_layout, parent, false);
+                        .inflate(R.layout.retrieved_layout, parent, false);
                 return new MyViewHolder(view);
             }
 
@@ -195,11 +191,11 @@ public class HomeActivity extends AppCompatActivity {
             public void onError(@NonNull DatabaseError error) {
                 super.onError(error);
             }
+
         };
 
         recyclerView.setAdapter(adapter);
         adapter.startListening();
-
     }
 
     private void updateTask() {
@@ -254,16 +250,13 @@ public class HomeActivity extends AppCompatActivity {
                         } else {
                             String error = task.getException().toString();
                             Toast.makeText(HomeActivity.this, "Usunięcie nieudane" + error, Toast.LENGTH_SHORT).show();
-
                         }
                     }
                 });
                 dialog.dismiss();
             }
         });
-
         dialog.show();
-
     }
 
     @Override
@@ -274,13 +267,12 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.logout:
-                mAuth.signOut();
-                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                finish();
+        if (item.getItemId() == R.id.logout) {
+            mAuth.signOut();
+            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -295,17 +287,19 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         public void setTask(String task) {
-            TextView taskTextView = mView.findViewById(R.id.bottomTextView);
+            TextView taskTextView = mView.findViewById(R.id.dateTv);
             taskTextView.setText(task);
         }
 
         public void setDesc(String desc) {
-            TextView descTextView = mView.findViewById(R.id.bottomDescTextView);
+            TextView descTextView = mView.findViewById(R.id.descriptionTv);
             descTextView.setText(desc);
         }
 
         public void setDate(String date) {
-            TextView dateTextView = mView.findViewById(R.id.bottomSuitedForTextView);
+            TextView dateTextView = mView.findViewById(R.id.dateTv);
         }
+
+
     }
 }

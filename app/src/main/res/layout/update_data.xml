@@ -2,15 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#123">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="Update"
+        android:text="Aktualizuj"
         android:gravity="center"
-        android:background="@drawable/background_design"
+        android:background="#123464"
         android:textColor="#ddf"
         android:padding="10dp"
         android:textSize="18sp"
@@ -30,9 +31,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Task"
+                android:text="Data"
                 android:textStyle="bold"
-                android:textColor="#000"
+                android:textColor="@color/white"
                 android:layout_margin="10dp" />
         </RelativeLayout>
 
@@ -45,10 +46,10 @@
                 android:id="@+id/mEditTextTask"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Task"
+                android:hint="Data odbioru"
                 android:textStyle="bold"
-                android:textColor="#000"
-                android:textColorHint="#000"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 android:layout_margin="10dp" />
         </RelativeLayout>
     </LinearLayout>
@@ -67,9 +68,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Description"
+                android:text="Typ"
                 android:textStyle="bold"
-                android:textColor="#000"
+                android:textColor="@color/white"
                 android:layout_margin="10dp" />
         </RelativeLayout>
 
@@ -82,10 +83,10 @@
                 android:id="@+id/mEditTextDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Description"
+                android:hint="Typ odbioru"
                 android:textStyle="bold"
-                android:textColor="#000"
-                android:textColorHint="#000"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 android:layout_margin="10dp" />
         </RelativeLayout>
     </LinearLayout>
@@ -105,9 +106,9 @@
                 android:id="@+id/btnDelete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Delete"
+                android:text="Usuń"
                 android:textAllCaps="false"
-                android:background="@drawable/background_design"
+                android:background="#123464"
                 android:textColor="#ddf"
                 android:textSize="17sp"
                 android:textStyle="bold"
@@ -123,9 +124,9 @@
                 android:id="@+id/btnUpdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Update"
+                android:text="Zapisz"
                 android:textAllCaps="false"
-                android:background="@drawable/background_design"
+                android:background="#123464"
                 android:textColor="#ddf"
                 android:textSize="17sp"
                 android:textStyle="bold"
