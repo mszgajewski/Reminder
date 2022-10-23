@@ -65,7 +65,7 @@ public class HomeActivity extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
-
+/*
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         onlineUserID = mUser.getUid();
@@ -81,14 +81,15 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-
+*/
         reference = FirebaseDatabase.getInstance().getReference().child("Area").child("Majków");
+/*
 
         floatingActionButton = findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(view -> addTask());
-
+*/
     }
-
+/*
     private void addTask() {
         AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -152,7 +153,7 @@ public class HomeActivity extends AppCompatActivity {
         });
         dialog.show();
     }
-
+*/
     @Override
     protected void onStart() {
         super.onStart();
