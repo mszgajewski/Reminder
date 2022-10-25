@@ -4,12 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -65,6 +71,7 @@ public class HomeActivity extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
+        floatingActionButton = findViewById(R.id.fab);
 /*
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -84,10 +91,36 @@ public class HomeActivity extends AppCompatActivity {
 */
         reference = FirebaseDatabase.getInstance().getReference().child("Area").child("Majków");
 /*
-
-        floatingActionButton = findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(view -> addTask());
 */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("My Notyfication", "My Notyfication ", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        Intent intent = new Intent(this, MainActivity.class);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(HomeActivity.this,"My Notyfication")
+                        .setContentTitle("Tytuł")
+                        .setContentText("Much longer text that cannot fit one line... ")
+                        .setSmallIcon(R.drawable.ic_trash_24)
+                        .setAutoCancel(true)
+                        .setContentIntent(pendingIntent)
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+
+                    NotificationManagerCompat managerCompat = NotificationManagerCompat.from(HomeActivity.this);
+                    managerCompat.notify(1,builder.build());
+
+                }
+            });
     }
 /*
     private void addTask() {
