@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -47,6 +48,8 @@ public class HomeActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private DatabaseReference reference;
+    private PendingIntent pendingIntent;
+    private AlarmManager alarmManager;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private String onlineUserID;
@@ -60,7 +63,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        createNotificationChannel();
         toolbar = findViewById(R.id.homeToolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Waste Reminder");
@@ -93,100 +96,96 @@ public class HomeActivity extends AppCompatActivity {
 /*
         floatingActionButton.setOnClickListener(view -> addTask());
 */
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("My Notyfication", "My Notyfication ", NotificationManager.IMPORTANCE_DEFAULT);
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-
-        Intent intent = new Intent(this, MainActivity.class);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    NotificationCompat.Builder builder = new NotificationCompat.Builder(HomeActivity.this,"My Notyfication")
-                        .setContentTitle("Tytuł")
-                        .setContentText("Much longer text that cannot fit one line... ")
-                        .setSmallIcon(R.drawable.ic_trash_24)
-                        .setAutoCancel(true)
-                        .setContentIntent(pendingIntent)
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-
-                    NotificationManagerCompat managerCompat = NotificationManagerCompat.from(HomeActivity.this);
-                    managerCompat.notify(1,builder.build());
-
+                    setAlarm();
                 }
             });
     }
-/*
-    private void addTask() {
-        AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
-        LayoutInflater inflater = LayoutInflater.from(this);
 
-        View myView = inflater.inflate(R.layout.input_file, null);
-        myDialog.setView(myView);
+    private void setAlarm() {
 
-        final AlertDialog dialog = myDialog.create();
-        dialog.setCancelable(false);
-
-        final EditText task = myView.findViewById(R.id.task);
-        final EditText description = myView.findViewById(R.id.description);
-        Button save = myView.findViewById(R.id.saveBtn);
-        Button cancel = myView.findViewById(R.id.cancelBtn);
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String mTask = task.getText().toString().trim();
-                String mDescription = description.getText().toString().trim();
-                String id = reference.push().getKey();
-                String date = DateFormat.getDateInstance().format(new Date());
-
-                if (TextUtils.isEmpty(mTask)){
-                    task.setError("Tytuł wymagany");
-                    return;
-                }
-                if (TextUtils.isEmpty(mDescription)){
-                    description.setError("Opis wymagany");
-                    return;
-                } else {
-                    loader.setMessage("Dodawanie danych");
-                    loader.setCanceledOnTouchOutside(true);
-                    loader.show();
-
-                    Model model = new Model(mTask, mDescription, id, date);
-
-                    reference.child(id).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()){
-                                Toast.makeText(HomeActivity.this, "Zadanie zaladowane prawidłowo",Toast.LENGTH_SHORT).show();
-                                loader.dismiss();
-                            } else {
-                                String error = task.getException().toString();
-                                Toast.makeText(HomeActivity.this, "Niepowodzenie" + error,Toast.LENGTH_SHORT).show();
-                                loader.dismiss();
-                            }
-                        }
-                    });
-                }
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
     }
-*/
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "reminder";
+            String description = "Channel for Reminder App";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("reminder", name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    /*
+        private void addTask() {
+            AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
+            LayoutInflater inflater = LayoutInflater.from(this);
+
+            View myView = inflater.inflate(R.layout.input_file, null);
+            myDialog.setView(myView);
+
+            final AlertDialog dialog = myDialog.create();
+            dialog.setCancelable(false);
+
+            final EditText task = myView.findViewById(R.id.task);
+            final EditText description = myView.findViewById(R.id.description);
+            Button save = myView.findViewById(R.id.saveBtn);
+            Button cancel = myView.findViewById(R.id.cancelBtn);
+
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+
+            save.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String mTask = task.getText().toString().trim();
+                    String mDescription = description.getText().toString().trim();
+                    String id = reference.push().getKey();
+                    String date = DateFormat.getDateInstance().format(new Date());
+
+                    if (TextUtils.isEmpty(mTask)){
+                        task.setError("Tytuł wymagany");
+                        return;
+                    }
+                    if (TextUtils.isEmpty(mDescription)){
+                        description.setError("Opis wymagany");
+                        return;
+                    } else {
+                        loader.setMessage("Dodawanie danych");
+                        loader.setCanceledOnTouchOutside(true);
+                        loader.show();
+
+                        Model model = new Model(mTask, mDescription, id, date);
+
+                        reference.child(id).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()){
+                                    Toast.makeText(HomeActivity.this, "Zadanie zaladowane prawidłowo",Toast.LENGTH_SHORT).show();
+                                    loader.dismiss();
+                                } else {
+                                    String error = task.getException().toString();
+                                    Toast.makeText(HomeActivity.this, "Niepowodzenie" + error,Toast.LENGTH_SHORT).show();
+                                    loader.dismiss();
+                                }
+                            }
+                        });
+                    }
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        }
+    */
     @Override
     protected void onStart() {
         super.onStart();
