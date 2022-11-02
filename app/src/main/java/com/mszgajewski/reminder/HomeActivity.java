@@ -207,7 +207,7 @@ public class HomeActivity extends AppCompatActivity {
                         task = model.getTask();
                         description = model.getDescription();
 
-                       updateTask();
+                      // updateTask();
                     }
                 });
             }
