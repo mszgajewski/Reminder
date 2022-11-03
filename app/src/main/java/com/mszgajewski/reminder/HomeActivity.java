@@ -45,6 +45,7 @@ import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
 
+    private AlarmReceiver alarmReceiver;
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private DatabaseReference reference;
@@ -63,7 +64,6 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        createNotificationChannel();
         toolbar = findViewById(R.id.homeToolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Waste Reminder");
@@ -106,19 +106,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setAlarm() {
 
-    }
-
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "reminder";
-            String description = "Channel for Reminder App";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("reminder", name, importance);
-            channel.setDescription(description);
-
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
     }
 
     /*
