@@ -75,6 +75,7 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         floatingActionButton = findViewById(R.id.fab);
+
 /*
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -105,7 +106,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setAlarm() {
-
     }
 
     /*
