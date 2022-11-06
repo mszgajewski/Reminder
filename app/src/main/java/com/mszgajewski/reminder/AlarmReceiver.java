@@ -6,6 +6,8 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
@@ -26,13 +28,16 @@ public class AlarmReceiver extends BroadcastReceiver {
         Intent tent = new Intent(context, HomeActivity.class);
         tent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, tent, 0);
+        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"reminder")
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"reminder")
                 .setContentTitle("Tytuł")
                 .setContentText("Much longer text that cannot fit one line... ")
                 .setSmallIcon(R.drawable.ic_trash_24)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
+                .setSound(alarmSound)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
