@@ -16,8 +16,8 @@ import androidx.core.app.NotificationManagerCompat;
 public class AlarmReceiver extends BroadcastReceiver {
 
     public AlarmReceiver() {
-
     }
+
     @Override
     public void onReceive(Context context, Intent intent) {
         createNotification(context);
@@ -29,7 +29,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         tent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, tent, 0);
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"reminder")
                 .setContentTitle("Tytuł")

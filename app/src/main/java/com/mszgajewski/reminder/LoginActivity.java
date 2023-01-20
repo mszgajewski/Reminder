@@ -10,30 +10,30 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.mszgajewski.reminder.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
 
+    ActivityLoginBinding binding;
     private Toolbar toolbar;
-    private EditText loginEmail, loginPassword;
-    private Button loginButton;
-    private TextView loginQuestion;
-    private FirebaseAuth mAuth;
+
     private ProgressDialog loader;
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_login);
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         toolbar = findViewById(R.id.loginToolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Login");
@@ -45,12 +45,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-        loginEmail =findViewById(R.id.loginEmail);
-        loginPassword =findViewById(R.id.loginPassword);
-        loginButton =findViewById(R.id.loginButton);
-        loginQuestion =findViewById(R.id.loginPageQuestion);
-
-        loginQuestion.setOnClickListener(new View.OnClickListener() {
+        binding.loginPageQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
@@ -58,18 +53,18 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        binding.loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = loginEmail.getText().toString().trim();
-                String password = loginPassword.getText().toString().trim();
+                String email = binding.loginEmail.getText().toString().trim();
+                String password = binding.loginPassword.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)){
-                    loginEmail.setError("Email jest wymagany");
+                    binding.loginEmail.setError("Email jest wymagany");
                     return;
                 }
                 if (TextUtils.isEmpty(password)){
-                    loginEmail.setError("Hasło jest wymagane");
+                    binding.loginEmail.setError("Hasło jest wymagane");
                     return;
                 } else {
                     loader.setMessage("Logowanie");

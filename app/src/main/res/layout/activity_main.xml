@@ -12,15 +12,15 @@
         android:id="@+id/imageView"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:src="#296D98"
+        android:src="#2E2E2C"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"/>
+        android:layout_marginTop="100dp" />
 
     <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Waste Calendar"
+        android:text="Reminder"
         android:layout_gravity="center"
         android:textColor="#ffe"
         android:textSize="30sp"
