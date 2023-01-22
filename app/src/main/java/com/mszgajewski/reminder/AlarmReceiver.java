@@ -32,7 +32,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"reminder")
                 .setContentTitle("Tytuł")
-                .setContentText("Much longer text that cannot fit one line... ")
+                .setContentText("")
                 .setSmallIcon(R.drawable.ic_trash_24)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
