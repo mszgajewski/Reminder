@@ -14,43 +14,46 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 public class AlarmReceiver extends BroadcastReceiver {
+    public static final String title = "Alarm jednorazowy";
+    public static final String EXTRA_MESSAGE = "message";
+    public static final String EXTRA_TYPE = "typ";
+
+    private static final int notifyId = 100;
+    private static final String CHANNEL_ID = "channel_notify_alarms";
+    private static final CharSequence CHANNEL_NAME = "Alarm Channel";
 
     public AlarmReceiver() {
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        createNotification(context);
+        String type = intent.getStringExtra(EXTRA_TYPE);
+        String message = intent.getStringExtra(EXTRA_MESSAGE);
 
+        showNotification(context, title,message,notifyId);
     }
 
-        private void createNotification(Context context) {
+        private void showNotification(Context context, String title, String message, int notifyId) {
         Intent tent = new Intent(context, HomeActivity.class);
         tent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, tent, 0);
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"reminder")
-                .setContentTitle("Tytuł")
-                .setContentText("")
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setContentTitle(title)
+                .setContentText(message)
                 .setSmallIcon(R.drawable.ic_trash_24)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
                 .setSound(alarmSound)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                CharSequence name = "reminder";
-                String description = "Channel for Reminder App";
-                int importance = NotificationManager.IMPORTANCE_DEFAULT;
-                NotificationChannel channel = new NotificationChannel("reminder", name, importance);
-                channel.setDescription(description);
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME,notifyId);
 
-                NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
-                notificationManager.createNotificationChannel(channel);
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
 
-        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(context);
-        managerCompat.notify(1,builder.build());
+            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(context);
+            managerCompat.notify(1,builder.build());
         }
-    }
 }
