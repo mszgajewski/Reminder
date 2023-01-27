@@ -177,6 +177,8 @@ public class HomeActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        alarmReceiver = new AlarmReceiver();
+
         FirebaseRecyclerOptions<Model> options = new FirebaseRecyclerOptions.Builder<Model>()
                 .setQuery(reference, Model.class).build();
 
