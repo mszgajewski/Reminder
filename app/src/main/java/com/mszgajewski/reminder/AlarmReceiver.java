@@ -40,7 +40,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         String message = intent.getStringExtra(EXTRA_MESSAGE);
         showNotification(context, title,message,notifyId);
-        setOneTimeAlarm();
+        setOneTimeAlarm(context,);
     }
 
     private void showNotification(Context context, String title, String message, int notifyId) {
@@ -60,38 +60,31 @@ public class AlarmReceiver extends BroadcastReceiver {
         channel.enableVibration(true);
         channel.setVibrationPattern(new long[] {1000,1000, 1000, 1000, 1000});
         builder.setChannelId(CHANNEL_ID);
-
         if (notificationManager != null) {
             notificationManager.createNotificationChannel(channel);
         }
-
         Notification notification = builder.build();
-
         if (notificationManager != null){
             notificationManager.notify(notifyId,notification);
         }
     }
     public void setOneTimeAlarm(Context context, String date, String time, String message) {
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Date");
+        databaseReference = firebaseDatabase.getReference("Date").;
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context,AlarmReceiver.class);
         intent.putExtra(EXTRA_MESSAGE,message);
         //intent.putExtra(EXTRA_TYPE,type);
 
-
-
-
         String[] dateArray = date.split("-");
-        String[] timeArray = time.split(":");
 
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, Integer.parseInt(dateArray[0]));
+        calendar.set(Calendar.YEAR, Integer.parseInt(dateArray[2]));
         calendar.set(Calendar.MONTH, Integer.parseInt(dateArray[1]) - 1);
-        calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateArray[2]));
-        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeArray[0]));
-        calendar.set(Calendar.MINUTE, Integer.parseInt(timeArray[1]));
+        calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateArray[0]));
+        calendar.set(Calendar.HOUR_OF_DAY, 12);
+        calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notifyId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
