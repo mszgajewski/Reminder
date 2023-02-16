@@ -40,7 +40,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         String message = intent.getStringExtra(EXTRA_MESSAGE);
         showNotification(context, title,message,notifyId);
-        setOneTimeAlarm(context,);
+        //setOneTimeAlarm(context, m);
     }
 
     private void showNotification(Context context, String title, String message, int notifyId) {
@@ -70,7 +70,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
     public void setOneTimeAlarm(Context context, String date, String time, String message) {
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Date").;
+        databaseReference = firebaseDatabase.getReference("Date");
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context,AlarmReceiver.class);
