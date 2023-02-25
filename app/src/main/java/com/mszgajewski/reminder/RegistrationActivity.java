@@ -22,7 +22,7 @@ public class RegistrationActivity extends AppCompatActivity {
     ActivityRegistrationBinding binding;
     private Toolbar toolbar;
     private FirebaseAuth mAuth;
-    private ProgressDialog loader;
+    private DelayedProgressDialog loader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class RegistrationActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Register");
         mAuth = FirebaseAuth.getInstance();
-        loader = new ProgressDialog(this);
+        loader = new DelayedProgressDialog();
 
         binding.registrationPageQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,9 +59,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     binding.registrationEmail.setError("Hasło jest wymagane");
                     return;
                 } else {
-                    loader.setMessage("Rejestrowanie");
-                    loader.setCanceledOnTouchOutside(false);
-                    loader.show();
+                    loader.show(getSupportFragmentManager(),"Rejestrowanie");
                     mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {

@@ -23,7 +23,8 @@ public class LoginActivity extends AppCompatActivity {
 
     ActivityLoginBinding binding;
     private Toolbar toolbar;
-    private ProgressDialog loader;
+    DelayedProgressDialog loader = new DelayedProgressDialog();
+
     private FirebaseAuth mAuth;
 
     @Override
@@ -37,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Login");
         mAuth = FirebaseAuth.getInstance();
-        loader = new ProgressDialog(this);
+        loader = new DelayedProgressDialog();
 
         if (mAuth != null){
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
@@ -66,9 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                     binding.loginEmail.setError("Hasło jest wymagane");
                     return;
                 } else {
-                    loader.setMessage("Logowanie");
-                    loader.setCanceledOnTouchOutside(false);
-                    loader.show();
+                    loader.show(getSupportFragmentManager(), "Logowanie");
 
                     mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -81,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                                 String error = task.getException().toString();
                                 Toast.makeText(LoginActivity.this, "Logowanie nieudane" + error, Toast.LENGTH_SHORT).show();
                             }
-                            loader.dismiss();
+                            loader.cancel();
                         }
                     });
                 }
