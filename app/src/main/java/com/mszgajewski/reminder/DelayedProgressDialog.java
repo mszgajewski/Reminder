@@ -16,6 +16,9 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.mszgajewski.reminder.databinding.ActivityLoginBinding;
+import com.mszgajewski.reminder.databinding.DialogProgressBinding;
+
 
 /*
  * Copyright 2018 Qi Li
@@ -34,6 +37,8 @@ import androidx.fragment.app.FragmentTransaction;
  */
 
 public class DelayedProgressDialog extends DialogFragment {
+
+    DialogProgressBinding binding;
     private static final int DELAY_MILLISECOND = 450;
     private static final int MINIMUM_SHOW_DURATION_MILLISECOND = 300;
     private static final int PROGRESS_CONTENT_SIZE_DP = 80;
@@ -57,6 +62,8 @@ public class DelayedProgressDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        binding = DialogProgressBinding.inflate(getLayoutInflater());
+
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         builder.setView(inflater.inflate(R.layout.dialog_progress, null));
@@ -66,7 +73,7 @@ public class DelayedProgressDialog extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        mProgressBar = getDialog().findViewById(R.id.progress);
+        mProgressBar = binding.progress;
 
         if (getDialog().getWindow() != null) {
             int px = (int) (PROGRESS_CONTENT_SIZE_DP * getResources().getDisplayMetrics().density);
