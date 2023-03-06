@@ -2,9 +2,7 @@ package com.mszgajewski.reminder;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -22,7 +20,7 @@ import com.mszgajewski.reminder.databinding.ActivityLoginBinding;
 public class LoginActivity extends AppCompatActivity {
 
     ActivityLoginBinding binding;
-    private Toolbar toolbar;
+
     DelayedProgressDialog loader = new DelayedProgressDialog();
 
     private FirebaseAuth mAuth;
@@ -30,14 +28,16 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        toolbar = findViewById(R.id.loginToolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Login");
+        setSupportActionBar(binding.loginToolbar);
+        getSupportActionBar().setTitle("Zaloguj się");
+
         mAuth = FirebaseAuth.getInstance();
+
         loader = new DelayedProgressDialog();
 
         if (mAuth != null){

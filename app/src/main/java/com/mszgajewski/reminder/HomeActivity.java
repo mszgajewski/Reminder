@@ -54,7 +54,7 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private String onlineUserID;
-    private ProgressDialog loader;
+    DelayedProgressDialog loader = new DelayedProgressDialog();
     private FloatingActionButton floatingActionButton;
     private String key = "";
     private String task;

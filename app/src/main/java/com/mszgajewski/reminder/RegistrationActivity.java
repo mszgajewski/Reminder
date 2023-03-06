@@ -2,8 +2,6 @@ package com.mszgajewski.reminder;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,25 +13,27 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
 import com.mszgajewski.reminder.databinding.ActivityRegistrationBinding;
 
 public class RegistrationActivity extends AppCompatActivity {
 
     ActivityRegistrationBinding binding;
-    private Toolbar toolbar;
+
     private FirebaseAuth mAuth;
     private DelayedProgressDialog loader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         binding = ActivityRegistrationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        toolbar = findViewById(R.id.registrationToolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Register");
+        setSupportActionBar(binding.registrationToolbar);
+        getSupportActionBar().setTitle("Zarejestruj się");
+
         mAuth = FirebaseAuth.getInstance();
         loader = new DelayedProgressDialog();
 
