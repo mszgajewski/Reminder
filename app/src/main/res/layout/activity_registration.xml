@@ -54,7 +54,7 @@
         android:id="@+id/registrationButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Zrejestruj"
+        android:text="Zarejestruj"
         android:textAllCaps="false"
         android:layout_margin="10dp"
         android:textColor="#000"

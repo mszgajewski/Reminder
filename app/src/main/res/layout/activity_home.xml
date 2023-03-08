@@ -12,7 +12,7 @@
         android:id="@+id/homeToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#296D98"
+        android:background="#1C2433"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/Theme.AppCompat.Light" />
 
@@ -32,7 +32,7 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             android:src="@drawable/ic_add"
-            app:backgroundTint="#728062"/>
+            app:backgroundTint="#ddf"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

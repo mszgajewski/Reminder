@@ -39,6 +39,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.mszgajewski.reminder.databinding.ActivityHomeBinding;
+import com.mszgajewski.reminder.databinding.ActivityLoginBinding;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -46,8 +48,7 @@ import java.util.Date;
 public class HomeActivity extends AppCompatActivity {
 
     private AlarmReceiver alarmReceiver;
-    private Toolbar toolbar;
-    private RecyclerView recyclerView;
+    ActivityHomeBinding binding;
     private DatabaseReference reference;
     private PendingIntent pendingIntent;
     private AlarmManager alarmManager;
@@ -55,7 +56,6 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseUser mUser;
     private String onlineUserID;
     DelayedProgressDialog loader = new DelayedProgressDialog();
-    private FloatingActionButton floatingActionButton;
     private String key = "";
     private String task;
     private String description;
@@ -63,18 +63,16 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        toolbar = findViewById(R.id.homeToolbar);
-        setSupportActionBar(toolbar);
+        binding = ActivityHomeBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        setSupportActionBar(binding.homeToolbar);
         getSupportActionBar().setTitle("Waste Reminder");
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        floatingActionButton = findViewById(R.id.fab);
+        binding.recyclerView.setHasFixedSize(true);
+        binding.recyclerView.setLayoutManager(linearLayoutManager);
 
 /*
         mAuth = FirebaseAuth.getInstance();
@@ -97,7 +95,7 @@ public class HomeActivity extends AppCompatActivity {
 /*
         floatingActionButton.setOnClickListener(view -> addTask());
 */
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        binding.fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     setAlarm();
@@ -216,7 +214,7 @@ public class HomeActivity extends AppCompatActivity {
 
         };
 
-        recyclerView.setAdapter(adapter);
+        binding.recyclerView.setAdapter(adapter);
         adapter.startListening();
     }
 /*

@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:text="Reminder"
         android:layout_gravity="center"
-        android:textColor="#ffe"
+        android:textColor="#ddf"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

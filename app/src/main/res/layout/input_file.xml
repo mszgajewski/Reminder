@@ -11,7 +11,7 @@
         android:layout_margin="10dp"
         android:text="Dodaj nowy termin"
         android:gravity="center"
-        android:background="@drawable/background_design"
+        android:background="#1C2433"
         android:padding="10dp"
         android:textColor="#ddf"
         android:textStyle="bold"
@@ -109,7 +109,7 @@
                 android:text="Anuluj"
                 android:textAllCaps="false"
                 android:textColor="#ddf"
-                android:background="@drawable/background_design"
+                android:background="#1C2433"
                 android:textSize="10sp" />
 
         </RelativeLayout>
@@ -127,7 +127,7 @@
                 android:text="Zapisz"
                 android:textAllCaps="false"
                 android:textColor="#ddf"
-                android:background="@drawable/background_design"
+                android:background="#1C2433"
                 android:textSize="10sp" />
 
         </RelativeLayout>
