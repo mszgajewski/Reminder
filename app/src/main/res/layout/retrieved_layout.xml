@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#3F4873">
+        android:background="#404467">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,33 +35,56 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/taskTv"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:textColor="#ddf"
-                android:text="Typ"
-                android:padding="5dp"
                 android:maxLines="1"
-                android:textSize="15sp"
+                android:padding="5dp"
+                android:layout_marginTop="20dp"
+                android:text="Typ"
+                android:textColor="#ddf"
+                android:textSize="18sp"
                 android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/yelow"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_toRightOf="@id/descriptionTv"
+                android:src="@drawable/ic_trash_yelow" />
+
+            <ImageView
+                android:id="@+id/blue"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/yelow"
+                android:src="@drawable/ic_trash_blue" />
+
+            <ImageView
+                android:id="@+id/green"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/blue"
+                android:src="@drawable/ic_trash_green" />
 
             <TextView
                 android:id="@+id/descriptionTv"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:textColor="#ddf"
-                android:text="Opis"
+                android:layout_alignBottom="@id/taskTv"
+                android:layout_marginBottom="-67dp"
                 android:maxLines="3"
-                android:textSize="15sp" />
-        </LinearLayout>
+                android:text="Opis"
+                android:textColor="#ddf"
+                android:textSize="20sp" />
+        </RelativeLayout>
 
     </LinearLayout>
 
