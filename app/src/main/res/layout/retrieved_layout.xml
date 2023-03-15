@@ -44,9 +44,9 @@
                 android:id="@+id/taskTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:maxLines="1"
                 android:padding="5dp"
-                android:layout_marginTop="20dp"
                 android:text="Typ"
                 android:textColor="#ddf"
                 android:textSize="18sp"
@@ -56,30 +56,16 @@
                 android:id="@+id/yelow"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="20dp"
-                android:layout_toRightOf="@id/descriptionTv"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="2dp"
                 android:src="@drawable/ic_trash_yelow" />
-
-            <ImageView
-                android:id="@+id/blue"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:layout_toRightOf="@id/yelow"
-                android:src="@drawable/ic_trash_blue" />
-
-            <ImageView
-                android:id="@+id/green"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:layout_toRightOf="@id/blue"
-                android:src="@drawable/ic_trash_green" />
 
             <TextView
                 android:id="@+id/descriptionTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/taskTv"
-                android:layout_marginBottom="-67dp"
+                android:layout_marginBottom="-80dp"
                 android:maxLines="3"
                 android:text="Opis"
                 android:textColor="#ddf"
