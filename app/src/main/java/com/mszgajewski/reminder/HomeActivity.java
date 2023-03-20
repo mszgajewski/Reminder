@@ -66,7 +66,7 @@ public class HomeActivity extends AppCompatActivity {
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.homeToolbar);
-        getSupportActionBar().setTitle("Waste Reminder");
+        getSupportActionBar().setTitle("Reminder");
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
@@ -94,13 +94,14 @@ public class HomeActivity extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference().child("Area").child("Majków");
 /*
         floatingActionButton.setOnClickListener(view -> addTask());
-*/
+
         binding.fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     setAlarm();
                 }
             });
+ */
     }
 
     private void setAlarm() {
