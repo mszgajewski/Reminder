@@ -92,86 +92,11 @@ public class HomeActivity extends AppCompatActivity {
         }
 */
         reference = FirebaseDatabase.getInstance().getReference().child("Area").child("Majków");
-/*
-        floatingActionButton.setOnClickListener(view -> addTask());
-
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    setAlarm();
-                }
-            });
- */
     }
 
     private void setAlarm() {
     }
 
-    /*
-        private void addTask() {
-            AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
-            LayoutInflater inflater = LayoutInflater.from(this);
-
-            View myView = inflater.inflate(R.layout.input_file, null);
-            myDialog.setView(myView);
-
-            final AlertDialog dialog = myDialog.create();
-            dialog.setCancelable(false);
-
-            final EditText task = myView.findViewById(R.id.task);
-            final EditText description = myView.findViewById(R.id.description);
-            Button save = myView.findViewById(R.id.saveBtn);
-            Button cancel = myView.findViewById(R.id.cancelBtn);
-
-            cancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                }
-            });
-
-            save.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String mTask = task.getText().toString().trim();
-                    String mDescription = description.getText().toString().trim();
-                    String id = reference.push().getKey();
-                    String date = DateFormat.getDateInstance().format(new Date());
-
-                    if (TextUtils.isEmpty(mTask)){
-                        task.setError("Tytuł wymagany");
-                        return;
-                    }
-                    if (TextUtils.isEmpty(mDescription)){
-                        description.setError("Opis wymagany");
-                        return;
-                    } else {
-                        loader.setMessage("Dodawanie danych");
-                        loader.setCanceledOnTouchOutside(true);
-                        loader.show();
-
-                        Model model = new Model(mTask, mDescription, id, date);
-
-                        reference.child(id).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()){
-                                    Toast.makeText(HomeActivity.this, "Zadanie zaladowane prawidłowo",Toast.LENGTH_SHORT).show();
-                                    loader.dismiss();
-                                } else {
-                                    String error = task.getException().toString();
-                                    Toast.makeText(HomeActivity.this, "Niepowodzenie" + error,Toast.LENGTH_SHORT).show();
-                                    loader.dismiss();
-                                }
-                            }
-                        });
-                    }
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
-        }
-    */
     @Override
     protected void onStart() {
         super.onStart();
@@ -218,69 +143,7 @@ public class HomeActivity extends AppCompatActivity {
         binding.recyclerView.setAdapter(adapter);
         adapter.startListening();
     }
-/*
-    private void updateTask() {
-        AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View view = inflater.inflate(R.layout.update_data,null);
-        myDialog.setView(view);
-
-        AlertDialog dialog = myDialog.create();
-
-        EditText mTask = view.findViewById(R.id.mEditTextTask);
-        EditText mDescription = view.findViewById(R.id.mEditTextDescription);
-
-        Button delButton = view.findViewById(R.id.btnDelete);
-        Button updateButton = view.findViewById(R.id.btnUpdate);
-
-        updateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                task = mTask.getText().toString().trim();
-                description = mDescription.getText().toString().trim();
-
-                String date = DateFormat.getDateInstance().format(new Date());
-
-                Model model = new Model(task, description, key, date);
-
-                reference.child(key).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
-                            Toast.makeText(HomeActivity.this, "Pomyślnie zaktualizowano", Toast.LENGTH_SHORT).show();
-                        } else {
-                            String error = task.getException().toString();
-                            Toast.makeText(HomeActivity.this, "Aktualizacja nieudana" + error, Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-                });
-                dialog.dismiss();
-            }
-        });
-
-        delButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                reference.child(key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
-                            Toast.makeText(HomeActivity.this, "Pomyślnie usunięto", Toast.LENGTH_SHORT).show();
-                        } else {
-                            String error = task.getException().toString();
-                            Toast.makeText(HomeActivity.this, "Usunięcie nieudane" + error, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
-*/
-    @Override
+@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu,menu);
         return super.onCreateOptionsMenu(menu);
@@ -319,8 +182,7 @@ public class HomeActivity extends AppCompatActivity {
 
         public void setDate(String date) {
             TextView dateTextView = mView.findViewById(R.id.dateTv);
+            dateTextView.setText(date);
         }
-
-
     }
 }
