@@ -308,17 +308,17 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         public void setTask(String task) {
-            TextView taskTextView = mView.findViewById(R.id.itemName);
+            TextView taskTextView = mView.findViewById(R.id.itemPrice);
             taskTextView.setText(task);
         }
 
         public void setDesc(String desc) {
-            TextView descTextView = mView.findViewById(R.id.itemName);
+            TextView descTextView = mView.findViewById(R.id.itemPrice);
             descTextView.setText(desc);
         }
 
         public void setDate(String date) {
-            TextView dateTextView = mView.findViewById(R.id.itemName);
+            TextView dateTextView = mView.findViewById(R.id.itemPrice);
             dateTextView.setText(date);
         }
     }
