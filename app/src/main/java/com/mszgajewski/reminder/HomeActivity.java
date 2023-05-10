@@ -106,7 +106,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setAlarm() {
     }
-
     /*
         private void addTask() {
             AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
@@ -194,7 +193,6 @@ public class HomeActivity extends AppCompatActivity {
                         key = getRef(position).getKey();
                         task = model.getTask();
                         description = model.getDescription();
-
                       // updateTask();
                     }
                 });
