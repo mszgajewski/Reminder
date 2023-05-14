@@ -80,10 +80,8 @@ public class HomeActivity extends AppCompatActivity {
         onlineUserID = mUser.getUid();
         loader = new ProgressDialog(this);
 
-
         if(mUser!= null)
         {
-
         } else {
             Intent intent = new Intent(HomeActivity.this, RegistrationActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
